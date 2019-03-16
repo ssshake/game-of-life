@@ -3,35 +3,38 @@ export default class Grid {
         this.fieldSize = fieldSize;
         this.numberOfCellsInRow = numberOfCellsInRow;
         this._geometry = [];
+        this.cellSize = fieldSize / numberOfCellsInRow
     }
 
     makeRandomGrid() {
-        const grid = new Array(this.numberOfCellsInRow)
+        const size = this.numberOfCellsInRow;
+        const grid = this.makeArrayOfSize(size);
 
-        
-        for (let i = 0; i < grid.length; i++) {
-        
-        
-            grid[i] = new Array(this.numberOfCellsInRow)
-        
-        
-            for (let j = 0; j < grid.length; j++) {
-        
-        
-                grid[i][j] = Math.floor(Math.random() * 2)
-        
-        
-            }
-        
+        for (let y = 0; y < grid.length; y++) {
+
+            grid[y] = this.makeArrayOfSize(size);
+            
+                for (let x = 0; x < grid.length; x++) {
+                
+                    grid[y][x] = Math.floor(Math.random() * 2)
+                
+                }
         
         }
         
         this._geometry = grid;
-        
     }
 
     get geometry() {
         return this._geometry;
+    }
+
+    makeArrayOfSize(size){
+        return new Array(size)
+    }
+
+    reset() {
+        this._geometry = [];
     }
       
 }
