@@ -1,17 +1,24 @@
 const fieldSize = 800
 const numberOfCellsInRow = 50
-const framesPerSecond = 8
+const framesPerSecond = 16
+const cellStrokeColor = '#000'
+const cellFillColor = '#0099ff';
 
-const getRandomGrid = () => {
-  const grid = new Array(numberOfCellsInRow)
-  for (let i = 0; i < grid.length; i++) {
-    grid[i] = new Array(numberOfCellsInRow)
-    for (let j = 0; j < grid.length; j++) {
-      grid[i][j] = Math.floor(Math.random() * 2)
-    }
-  }
-  return grid
-}
+import Game from './game.js';
+import Grid from './grid.js';
+import Cell from './grid.js';
+
+
+// const getRandomGrid = () => {
+//   const grid = new Array(numberOfCellsInRow)
+//   for (let i = 0; i < grid.length; i++) {
+//     grid[i] = new Array(numberOfCellsInRow)
+//     for (let j = 0; j < grid.length; j++) {
+//       grid[i][j] = Math.floor(Math.random() * 2)
+//     }
+//   }
+//   return grid
+// }
 
 const getNextGeneration = (grid) => {
   const nextGrid = new Array(grid.length)
@@ -50,11 +57,12 @@ const countNeighbors = (grid, x, y) => {
   return sum
 }
 
-const cellStrokeColor = '#aaa'
+
 const cellSize = fieldSize / numberOfCellsInRow
 
 const drawGrid = (ctx, grid) => {
   ctx.strokeStyle = cellStrokeColor
+  ctx.fillStyle = cellFillColor;
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid.length; j++) {
       const value = grid[i][j]
@@ -89,6 +97,12 @@ const generation = (ctx, grid) => {
 window.onload = () => {
   const canvas = document.getElementById('canvas')
   const ctx = canvas.getContext('2d')
-  const grid = getRandomGrid()
-  generation(ctx, grid)
+
+
+  const grid = new Grid(fieldSize, numberOfCellsInRow)
+  grid.makeRandomGrid();
+  console.log(grid.geometry)
+
+  // const grid = getRandomGrid()
+  // generation(ctx, grid)
 }
