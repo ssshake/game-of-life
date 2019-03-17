@@ -1,10 +1,11 @@
 const fieldSize = 800
 const numberOfCellsInRow = 50
-const framesPerSecond = 16
+const framesPerSecond = 10
 const cellStrokeColor = '#000'
-const cellFillColor = '#0099ff';
+const cellFillColor = 'rgba(0, 153, 255, 1)';
+const clearColor = 'rgba(0, 0, 0, .2)';
 
-import Game from './game.js';
+// import Game from './game.js';
 import Grid from './grid.js';
 import Cell from './cell.js';
 
@@ -70,7 +71,6 @@ const drawGrid = (ctx, grid) => {
   ctx.strokeStyle = cellStrokeColor
   ctx.fillStyle = cellFillColor;
 
-
   for (let i = 0; i < grid.length; i++) {
 
     for (let j = 0; j < grid.length; j++) {
@@ -98,7 +98,9 @@ const drawGrid = (ctx, grid) => {
 }
 
 const generation = (ctx, grid) => {
-  ctx.clearRect(0, 0, fieldSize, fieldSize)
+  ctx.fillStyle = clearColor;
+  ctx.fillRect(0, 0, fieldSize, fieldSize);
+//   ctx.clearRect(0, 0, fieldSize, fieldSize)
   drawGrid(ctx, grid)
   const gridOfNextGeneration = getNextGeneration(grid)
   setTimeout(() => {

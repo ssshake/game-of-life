@@ -5,7 +5,7 @@ export default class Game {
         this.framesPerSecond = framesPerSecond;
     }
 
-    generation = () => {
+    generation() {
         this.ctx.clearRect(0, 0, this.grid.fieldSize, this.grid.fieldSize)
 
         drawGrid(this.ctx, this.grid)
