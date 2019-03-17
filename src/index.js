@@ -108,9 +108,23 @@ const generation = (ctx, grid) => {
   }, 1000 / framesPerSecond)
 }
 
+function handleClick(e) {
+    ctx.fillStyle = "#FF00FF";  
+    let size = (fieldSize / numberOfCellsInRow)
+    console.log(Math.floor(e.offsetX/size))
+    console.log(Math.floor(e.offsetY/size))
+    ctx.fillRect(Math.floor(e.offsetX/size)*size, 
+               Math.floor(e.offsetY/size)*size,
+               size, size);
+}
+
+
 window.onload = () => {
   const canvas = document.getElementById('canvas')
   const ctx = canvas.getContext('2d')
+  window.ctx = ctx;
+  canvas.addEventListener('click', handleClick);
+  canvas.addEventListener('mousemove', handleClick);
 
 
   const grid = new Grid(fieldSize, numberOfCellsInRow)
