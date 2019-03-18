@@ -1,40 +1,76 @@
+const makeArrayOfSize = (size) => {
+  return 'x'.repeat(size).split('').map(() => null);
+}
+
+import Cell from './cell';
+
 export default class Grid {
-    constructor(fieldSize, numberOfCellsInRow){
-        this.fieldSize = fieldSize;
-        this.numberOfCellsInRow = numberOfCellsInRow;
-        this._geometry = [];
-        this.cellSize = fieldSize / numberOfCellsInRow
-    }
+  constructor(numberOfCellsInRow) {
+    this.size = numberOfCellsInRow;
+    this.emptyGrid();
+  }
 
-    makeRandomGrid() {
-        const size = this.numberOfCellsInRow;
-        const grid = this.makeArrayOfSize(size);
+  emptyGrid() {
+    this.cells = makeArrayOfSize(this.size)
+      .map((_, row) =>
+        makeArrayOfSize(this.size)
+        .map((_, column) => new Cell(this, column, row, 0))
+      );
+  }
 
-        for (let y = 0; y < grid.length; y++) {
+  seed() {
+    this.eachCell((cell) => {
+      cell.value = Math.random() > 0.5 ? 1 : 0;
+    });
+  }
 
-            grid[y] = this.makeArrayOfSize(size);
-            
-                for (let x = 0; x < grid.length; x++) {
-                
-                    grid[y][x] = Math.floor(Math.random() * 2)
-                
-                }
-        
-        }
-        
-        this._geometry = grid;
-    }
+  eachCell(callback) {
+    this.cells.forEach((rowCells, row) => {
+      rowCells.forEach((cell, column) => {
+        callback(cell, {
+          row,
+          column
+        });
+      });
+    });
+  }
 
-    get geometry() {
-        return this._geometry;
-    }
+  getCell(column, row) {
+    return this.cells[row] && this.cells[row][column]
+  }
 
-    makeArrayOfSize(size){
-        return new Array(size)
-    }
+  update() {
+    this.eachCell((cell, {
+      row,
+      column
+    }) => {
+      const neighbours = cell
+        .getNeighbours(this)
+        .reduce((sum, neighbourCell) => sum + neighbourCell.value, 0);
 
-    reset() {
-        this._geometry = [];
-    }
-      
+      cell.meta = {
+        ...cell.meta,
+        neighbours,
+      };
+
+      if (cell.value === 0 && neighbours == 3) { //If cell is dead but has three living neighours
+        //Bring to life
+
+        cell.value = 1
+        cell.meta.continuity = 0;
+
+      } else if ((cell.value === 1) && (neighbours != 2 && neighbours != 3)) { //If alive not 2-3 neighbours, die
+
+        cell.value = 0
+        cell.meta.continuity = 0;
+
+      } else { //else sustain
+
+        // cell.value = cell.value
+        cell.meta.continuity += 1;
+
+      }
+    });
+  }
+
 }
