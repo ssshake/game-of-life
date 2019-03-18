@@ -25,7 +25,7 @@ const drawGrid = (ctx, grid) => {
     row,
     column
   }) => {
-    if (cell.value) {
+    if (cell.isAlive()) {
       ctx.fillRect(
         column * cellSize,
         row * cellSize,
@@ -67,6 +67,8 @@ const init = () => {
   let interval = null;
   const toggle = document.querySelector('#toggle');
   const step = document.querySelector('#step');
+  const reset = document.querySelector('#reset');
+  const seedPercent = 1 / 12;
 
   const pause = () => {
     if (!interval) return;
@@ -98,9 +100,16 @@ const init = () => {
     generation(ctx, grid);
   });
 
+  reset.addEventListener('click', () => {
+    pause();
+    grid.emptyGrid();
+    grid.seed(seedPercent);
+    drawGrid(ctx, grid);
+  });
+
 
   const grid = new Grid(numberOfCellsInRow)
-  grid.seed();
+  grid.seed(seedPercent);
 
   console.log(grid)
 
