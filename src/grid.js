@@ -41,6 +41,8 @@ export default class Grid {
   }
 
   update() {
+    let commits = [];
+
     this.eachCell((cell, {
       row,
       column
@@ -57,12 +59,14 @@ export default class Grid {
       if (cell.value === 0 && neighbours === 3) { //If cell is dead but has three living neighours
         //Bring to life
 
-        cell.value = 1
+        commits.push([cell, 1]);
+        // cell.value = 1
         // cell.meta.continuity = 0;
 
       } else if ((cell.value === 1) && (neighbours != 2 && neighbours != 3)) { //If alive not 2-3 neighbours, die
 
-        cell.value = 0
+        // cell.value = 0
+        commits.push([cell, 0]);
         // cell.meta.continuity = 0;
 
       } else { //else sustain
@@ -72,6 +76,8 @@ export default class Grid {
 
       }
     });
+
+    commits.forEach(([cell, value]) => cell.value = value);
   }
 
 }

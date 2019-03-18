@@ -68,7 +68,7 @@ const init = () => {
   const toggle = document.querySelector('#toggle');
   const step = document.querySelector('#step');
   const reset = document.querySelector('#reset');
-  const seedPercent = 1 / 12;
+  const seedPercent = 1 / 2;
 
   const pause = () => {
     if (!interval) return;
@@ -110,8 +110,6 @@ const init = () => {
 
   const grid = new Grid(numberOfCellsInRow)
   grid.seed(seedPercent);
-
-  console.log(grid)
 
   drawGrid(ctx, grid);
 }
