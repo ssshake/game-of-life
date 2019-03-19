@@ -4,6 +4,7 @@ export default class Game {
     this.colors = colors;
     this.timer = timer;
     this.handle = null;
+    this.cursor = null;
   }
 
   start(grid) {
@@ -22,6 +23,16 @@ export default class Game {
 
   queue() {
     this.handle = this.timer.trigger(() => this.tick());
+  }
+
+  setCursor(cursorTuple) {
+    this.cursor = cursorTuple.map((value, axis) =>
+      Math.floor(value / this.cellSize[axis]) * this.cellSize[axis]
+    );
+  }
+
+  removeCursor() {
+    this.cursor = null;
   }
 
   erase() {
@@ -54,10 +65,22 @@ export default class Game {
     });
   }
 
+  drawCursor() {
+    if (!this.cursor) return;
+    this.ctx.fillStyle = "#FF00FF";
+    this.ctx.fillRect(
+      this.cursor[0],
+      this.cursor[1],
+      this.cellSize[0],
+      this.cellSize[1]
+    );
+  }
+
   tick() {
-    this.grid.update();
-    this.draw()
     this.erase();
+    this.grid.update();
+    this.draw();
+    this.drawCursor();
 
     this.queue();
   }

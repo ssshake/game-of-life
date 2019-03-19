@@ -37,13 +37,7 @@ const makeMouseHandler = game => ({
   offsetX,
   offsetY
 }) => {
-  game.ctx.fillStyle = "#FF00FF";
-  game.ctx.fillRect(
-    Math.floor(offsetX / game.cellSize[0]) * game.cellSize[0],
-    Math.floor(offsetY / game.cellSize[1]) * game.cellSize[1],
-    game.cellSize[0],
-    game.cellSize[1]
-  );
+  game.setCursor([offsetX, offsetY]);
 };
 
 
@@ -57,18 +51,19 @@ const init = () => {
 
   const ctx = canvas.getContext('2d');
 
-  const seedPercent = 1 / 2;
-
   const game = new Game(ctx, themes.default, timers.raf)
 
   const mouseHandler = makeMouseHandler(game);
   canvas.addEventListener('click', mouseHandler);
   canvas.addEventListener('mousemove', mouseHandler);
+  canvas.addEventListener('mouseout', () => {
+    game.removeCursor();
+  });
 
   const grid = new Grid(cellCount[0], cellCount[1])
-  grid.seed(seedPercent);
+  grid.seed(1 / 2);
 
-  game.start(grid)
+  game.start(grid);
 }
 
 init();
