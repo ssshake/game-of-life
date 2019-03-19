@@ -39,10 +39,10 @@ const makeMouseHandler = game => ({
 }) => {
   game.ctx.fillStyle = "#FF00FF";
   game.ctx.fillRect(
-    Math.floor(offsetX / game.grid.cellSize[0]) * game.grid.cellSize[0],
-    Math.floor(offsetY / game.grid.cellSize[1]) * game.grid.cellSize[1],
-    game.grid.cellSize[0],
-    game.grid.cellSize[1]
+    Math.floor(offsetX / game.cellSize[0]) * game.cellSize[0],
+    Math.floor(offsetY / game.cellSize[1]) * game.cellSize[1],
+    game.cellSize[0],
+    game.cellSize[1]
   );
 };
 
