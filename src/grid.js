@@ -5,15 +5,16 @@ const makeArrayOfSize = (size) => {
 import Cell from './cell';
 
 export default class Grid {
-  constructor(numberOfCellsInRow) {
-    this.size = numberOfCellsInRow;
+  constructor(width, height) {
+    this.width = width;
+    this.height = height || width;
     this.emptyGrid();
   }
 
   emptyGrid() {
-    this.cells = makeArrayOfSize(this.size)
+    this.cells = makeArrayOfSize(this.height)
       .map((_, row) =>
-        makeArrayOfSize(this.size).map((_, column) =>
+        makeArrayOfSize(this.width).map((_, column) =>
           new Cell(this, column, row, 0)
         )
       );
@@ -49,31 +50,29 @@ export default class Grid {
     }) => {
       const neighbours = cell
         .getNeighbours(this)
-        .reduce((sum, neighbourCell) => sum + neighbourCell.value, 0);
 
-      // cell.meta = {
-      //   ...cell.meta,
-      //   neighbours,
-      // };
+      const sum = (arr, get) => arr.reduce((sum, item) => sum + get(item), 0);
 
-      if (cell.value === 0 && neighbours === 3) { //If cell is dead but has three living neighours
+      const count = sum(neighbours, c => c.value);
+
+      if (cell.value === 0 && count === 3) { //If cell is dead but has three living neighours
         //Bring to life
 
+        const aliveNeighbours = neighbours.filter(c => c.isAlive());
         commits.push([cell, 1]);
-        // cell.value = 1
-        // cell.meta.continuity = 0;
+        cell.meta.continuity += 1;
+        cell.hsl[0] = ((
+          sum(aliveNeighbours, c => c.hsl[0]) / aliveNeighbours.length
+        ) + 10) % 360;
 
-      } else if ((cell.value === 1) && (neighbours != 2 && neighbours != 3)) { //If alive not 2-3 neighbours, die
+      } else if ((cell.value === 1) && (count != 2 && count != 3)) { //If alive not 2-3 neighbours, die
 
-        // cell.value = 0
         commits.push([cell, 0]);
-        // cell.meta.continuity = 0;
+        cell.meta.continuity = 0;
 
-      } else { //else sustain
-
-        // cell.value = cell.value
+      } else {
         // cell.meta.continuity += 1;
-
+        // cell.hsl[0] = Math.max(cell.hsl[0] + 1) % 360;
       }
     });
 

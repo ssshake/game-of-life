@@ -8,16 +8,21 @@ const normalizeValue = v => (v > 0 ? 1 : 0);
 
 export default class Cell {
   constructor(grid, column, row, value = 0) {
+    this.hsl = [0, '100%', '70%']
+
+    this.meta = {
+      continuity: 0,
+    };
     this._value = normalizeValue(value);
     this._position = {
       row,
       column
     };
 
-    const wrap = v => v < 0 ?
-      v + grid.size :
-      (v >= grid.size ?
-        v - grid.size :
+    const wrap = (size, v) => v < 0 ?
+      v + size :
+      (v >= size ?
+        v - size :
         v);
 
     this._neighbours = neighboursMatrix.reduce((neighbours, matrixRow, r) => {
@@ -25,11 +30,15 @@ export default class Cell {
         if (r === 1 && c === 1) return nextNeighbours;
 
         return nextNeighbours.concat({
-          column: wrap(column + (c - 1)),
-          row: wrap(row + (r - 1)),
+          column: wrap(grid.width, column + (c - 1)),
+          row: wrap(grid.height, row + (r - 1)),
         });
       }, neighbours);
     }, []);
+  }
+
+  color() {
+    return `hsl(${this.hsl.join(', ')})`;
   }
 
   isAlive() {
