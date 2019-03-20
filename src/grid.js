@@ -2,7 +2,7 @@ const makeArrayOfSize = (size) => {
     return 'x'.repeat(size).split('').map(() => null);
 }
 
-import Cell from './cell';
+import Cell from './cell.js';
 
 export default class Grid {
     constructor(width, height){
