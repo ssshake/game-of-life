@@ -50,6 +50,7 @@ export default class Game {
             }
 
             this.ctx.fillStyle = cell.color();
+            // this.ctx.strokeStyle = cell.color();
 
             const rect = [
                 column * this.cellSize[0],
