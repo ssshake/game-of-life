@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "babel src -d lib",
-    "watch": "babel src --watch -d lib",
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,11 +19,8 @@
     "url": "https://github.com/amadevBox/game-of-life/issues"
   },
   "homepage": "https://github.com/amadevBox/game-of-life#readme",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "express": "^4.16.4"
+    "parcel-bundler": "^1.12.2"
   }
 }
