@@ -62,14 +62,18 @@ export default class Grid {
                 })
 
                 commits.push([cell, 1]);
-                cell.meta.continuity +=1;
-                cell.hsl[0] = ((
-                    sum(aliveNeighbours, c => c.hsl[0]) / aliveNeighbours.length
-                ) + 10) % 360;
+                // cell.meta.continuity +=1;
+                // cell.hsl[0] = ((
+                //     sum(aliveNeighbours, c => c.hsl[0]) / aliveNeighbours.length
+                // ) + 10) % 360;
 
             } else if ( (cell.value ===1 ) && (count != 2 && count != 3)) { //die
                 commits.push([cell, 0]);
                 cell.meta.continuity = 0;
+                cell.hsl[0] = cell.meta.continuity % 360;
+            } else { //live
+                cell.meta.continuity +=1;
+                cell.hsl[0] = cell.meta.continuity % 360;
             }           
 
         };

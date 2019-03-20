@@ -16,7 +16,7 @@ const timers = {
 
 const themes = {
   default: {
-    clear: 'rgba(0, 0, 0, .1)',
+    clear: 'rgba(0, 0, 0, 1)',
     cellStroke: '#000',
     cellFill: 'rgba(0, 153, 255, 1)',
   },
@@ -25,7 +25,7 @@ const themes = {
     cellStroke: '#FFF',
     cellFill: 'rgba(0, 0, 0, 1)',
   },
-};
+}
 
 const colors = themes.default;
 
@@ -46,7 +46,7 @@ const init = () => {
   canvas.width = canvasSize[0];
   canvas.height = canvasSize[1];
   const ctx = canvas.getContext('2d');
-  const game = new Game(ctx, themes.default, timers.raf);
+  const game = new Game(ctx, themes.default, timers.timeout);
   const mouseHandler = makeMouseHandler(game);
   canvas.addEventListener('click', mouseHandler );
   canvas.addEventListener('mousemove', mouseHandler );
@@ -55,7 +55,7 @@ const init = () => {
   });
 
   const grid = new Grid(cellCount[0], cellCount[1]);
-  grid.seed(1 / 2);
+  grid.seed( 0.5 );
   game.start(grid);
 };
 
