@@ -27,7 +27,7 @@ export default class Game {
 
     setCursor(cursorTuple) {
         this.cursor = cursorTuple.map((value, axis) => {
-            return Math.floor ( value, this.cellSize[axis] * this.cellSize[axis] )
+            return Math.floor ( value / this.cellSize[axis] ) * this.cellSize[axis];
         });
     }
 
