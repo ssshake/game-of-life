@@ -16,7 +16,7 @@ const timers = {
 
 const themes = {
   default: {
-    clear: 'rgba(0, 0, 0, 1)',
+    clear: 'rgba(0, 0, 0, .1)',
     cellStroke: '#000',
     cellFill: 'rgba(0, 153, 255, 1)',
   },
