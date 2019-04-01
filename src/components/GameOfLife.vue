@@ -7,6 +7,7 @@
 
 import Game from '../lib/game.js';
 import Grid from '../lib/grid.js';
+import { setTimeout } from 'timers';
 
 export default {
 
@@ -79,7 +80,11 @@ export default {
   },
 
   mounted () {
-    this.init();
+    setTimeout(() => {
+      console.log("STRTING?")
+      this.init();
+    }, 2000)
+    
   }
 }
 </script>
