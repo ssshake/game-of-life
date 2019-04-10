@@ -9,7 +9,7 @@ const normalizeValue = v => (v > 0 ? 1 : 0);
 
 export default class Cell {
     constructor(grid, column, row, value = 0) {
-        this.hsl = [0, '100%', '70%']
+        this.hsl = [194, '100%', '70%']
     
         this.meta = {
           continuity: 0,

@@ -16,7 +16,7 @@ const timers = {
 
 const themes = {
   default: {
-    clear: 'rgba(0, 0, 0, .1)',
+    clear: 'rgba(0, 0, 0, 1)',
     cellStroke: '#000',
     cellFill: 'rgba(0, 153, 255, 1)',
   },
@@ -46,13 +46,13 @@ const init = () => {
   canvas.width = canvasSize[0];
   canvas.height = canvasSize[1];
   const ctx = canvas.getContext('2d');
-  const game = new Game(ctx, themes.default, timers.timeout);
-  const mouseHandler = makeMouseHandler(game);
-  canvas.addEventListener('click', mouseHandler );
-  canvas.addEventListener('mousemove', mouseHandler );
-  canvas.addEventListener('mouseout', () => {
-    game.removeCursor();
-  });
+  const game = new Game(ctx, themes.default, timers.raf);
+  //const mouseHandler = makeMouseHandler(game);
+  //canvas.addEventListener('click', mouseHandler );
+  //canvas.addEventListener('mousemove', mouseHandler );
+  //canvas.addEventListener('mouseout', () => {
+  //  game.removeCursor();
+  //});
 
   const grid = new Grid(cellCount[0], cellCount[1]);
   grid.seed( 0.5 );
